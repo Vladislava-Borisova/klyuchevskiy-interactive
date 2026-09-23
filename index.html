@@ -54,10 +54,10 @@
     .act-inner { position:relative; width:min(100% - 12vw,1500px); margin:auto; padding:130px 0 90px; }
     .chapter { display:flex; align-items:center; gap:15px; margin-bottom:27px; color:var(--teal); font-size:11px; font-weight:800; letter-spacing:.27em; text-transform:uppercase; }
     .chapter:before { content:""; width:30px; height:1px; background:var(--teal); }
-    h1,h2,h3,p { margin-top:0; }
-    h1 { max-width:1080px; margin-bottom:26px; font-size:clamp(43px,5.5vw,98px); line-height:1.08; letter-spacing:-.065em; font-weight:600; text-wrap:balance; }
-    h2 { max-width:850px; margin-bottom:22px; font-size:clamp(38px,5vw,76px); line-height:1.09; letter-spacing:-.065em; font-weight:600; text-wrap:balance; }
-    h3 { font-size:clamp(20px,2vw,28px); line-height:1.2; letter-spacing:-.04em; font-weight:600; }
+    body h1,body h2,body h3,body p { margin-top:0; }
+    body h1 { max-width:1080px; margin-bottom:26px; font-size:clamp(43px,5.5vw,98px); line-height:1.08; letter-spacing:-.065em; font-weight:600; text-wrap:balance; }
+    body h2 { max-width:850px; margin-bottom:22px; font-size:clamp(38px,5vw,76px); line-height:1.09; letter-spacing:-.065em; font-weight:600; text-wrap:balance; }
+    body h3 { font-size:clamp(20px,2vw,28px); line-height:1.2; letter-spacing:-.04em; font-weight:600; }
     .accent { color:var(--teal); }
     .lede { max-width:650px; font-size:clamp(15px,1.4vw,18px); line-height:1.75; color:#e1edf7; }
     .muted { color:var(--muted); }
@@ -167,8 +167,8 @@
       .hero .act-inner { padding-top:130px; padding-bottom:72px; }
       .hero-side { display:none; }
       .hero-footer { font-size:8px; margin-top:80px; }
-      h1 { font-size:clamp(39px,9vw,64px); }
-      h2 { font-size:clamp(37px,9vw,54px); }
+      body h1 { font-size:clamp(39px,9vw,64px); }
+      body h2 { font-size:clamp(37px,9vw,54px); }
       .chapter { font-size:9px; letter-spacing:.2em; }
       .act:before,.hero:before { background:linear-gradient(90deg,#06101de8,#06101d9e),linear-gradient(0deg,#06101dcc,transparent); }
       .campus { min-height:150svh; }
