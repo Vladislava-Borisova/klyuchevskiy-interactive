@@ -1,76 +1,380 @@
 <!doctype html>
 <html lang="ru">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#070B19"><meta name="description" content="Ключевский — интерактивное путешествие по региональному центру: наука, искусство, спорт.">
-<title>Ключевский · Пространство возможностей</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<script defer src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
-<style>
-:root{--bg:#070B19;--teal:#2AB7CA;--navy:#144192;--gold:#F4D03F;--muted:#9aa9bf}*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:95px}body{margin:0;background:var(--bg);color:#f1f5fc;font-family:Inter,Arial,sans-serif;overflow-x:hidden}button,a{-webkit-tap-highlight-color:transparent}button{font:inherit;cursor:pointer}a{color:inherit;text-decoration:none}button:focus-visible,a:focus-visible{outline:2px solid var(--gold);outline-offset:6px}button{color:inherit}#world{position:fixed;inset:0;z-index:0;pointer-events:none}#world canvas{display:block;width:100%;height:100%}.shade{position:fixed;inset:0;z-index:1;pointer-events:none;background:linear-gradient(90deg,rgba(7,11,25,.95),rgba(7,11,25,.34) 60%,rgba(7,11,25,.08))}.grain{position:fixed;inset:0;pointer-events:none;z-index:2;opacity:.025;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' opacity='.6' filter='url(%23n)'/%3E%3C/svg%3E")}header{position:fixed;z-index:30;top:0;left:0;width:100%;padding:24px 4.5%;display:flex;align-items:center;justify-content:space-between;background:linear-gradient(var(--bg),transparent)}.brand{display:flex;gap:12px;align-items:center;font-weight:700;letter-spacing:-.6px}.mark{height:34px;width:34px;background:var(--teal);color:var(--bg);display:grid;place-items:center;font-size:25px;font-weight:900;clip-path:polygon(0 0,100% 0,100% 72%,72% 100%,0 100%)}.brand small{display:block;font-size:9px;letter-spacing:2.2px;color:var(--muted);font-weight:400;margin-top:4px}nav{display:flex;gap:27px;font-size:11px;color:#b4bfd1}nav a:hover,nav a.active{color:var(--teal)}.pill{font-size:10px;text-transform:uppercase;letter-spacing:1.5px;border:1px solid #ffffff26;border-radius:30px;padding:11px 17px;background:#0a152b88}.live{display:inline-block;background:var(--teal);width:5px;height:5px;border-radius:100%;margin-right:8px}.rail{position:fixed;right:28px;top:45%;z-index:25;display:grid;gap:17px}.rail a{width:6px;height:6px;border-radius:100%;background:#ffffff30}.rail a.active{background:var(--teal);box-shadow:0 0 0 5px #2ab7ca20}main{position:relative;z-index:5}section{position:relative;min-height:110svh;padding:150px 8% 100px;display:flex;flex-direction:column;justify-content:center}.eyebrow{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--teal);display:flex;gap:12px;align-items:center;margin-bottom:25px}.eyebrow:before{content:'';width:28px;height:1px;background:var(--teal)}h1{font-size:clamp(52px,7.2vw,112px);font-weight:500;line-height:1.01;letter-spacing:-.065em;margin:0 0 28px}h1 em,h2 em{font-style:normal;color:var(--teal)}h2{font-size:clamp(38px,5vw,72px);font-weight:500;line-height:1.07;letter-spacing:-.055em;margin:0 0 24px}p{font-size:14px;line-height:1.9;color:var(--muted);max-width:450px}.intro{max-width:580px}.actions{display:flex;gap:18px;align-items:center;flex-wrap:wrap;margin-top:32px}.primary{background:var(--teal);color:#061722;padding:16px 23px;border:0;border-radius:6px;font-size:12px;font-weight:600;display:inline-flex;gap:38px;align-items:center}.ghost{background:#101a2b80;border:1px solid #ffffff20;border-radius:6px;padding:15px 20px;font-size:12px;backdrop-filter:blur(20px)}.hero-meta{display:flex;gap:36px;margin-top:65px;color:var(--muted);font-size:10px;letter-spacing:1px}.hero-meta strong{display:block;color:white;font-size:22px;font-weight:400;letter-spacing:-1px;margin-bottom:9px}.hero-meta div+div{border-left:1px solid #ffffff20;padding-left:36px}.scene-caption{position:absolute;right:8%;bottom:110px;font-size:9px;letter-spacing:2px;color:#c0d4e7;text-align:right;line-height:2}.scene-caption b{font-weight:400;color:var(--teal)}.glass{background:linear-gradient(140deg,#172438c7,#0b1528b8);border:1px solid #ffffff16;border-radius:12px;backdrop-filter:blur(24px);box-shadow:0 25px 90px #0003}.scene-card{max-width:410px;padding:28px;margin-top:25px}.scene-card small{font-size:10px;letter-spacing:2px;color:var(--teal)}.scene-card h3{font-size:22px;margin:14px 0;font-weight:400}.chapter{position:absolute;top:120px;right:8%;color:#ffffff24;font-size:12px;letter-spacing:3px}.track-list{display:grid;gap:10px;max-width:420px;margin-top:22px}.track{display:flex;align-items:center;text-align:left;gap:18px;width:100%;padding:19px 21px;transition:background .2s,border-color .2s}.track:hover,.track.selected{border-color:var(--teal);background:#123140bb}.track .icon{color:var(--teal);font-size:23px;width:28px}.track strong{display:block;font-size:14px;font-weight:500}.track small{display:block;color:var(--muted);font-size:10px;margin-top:6px}.track .arrow{margin-left:auto;color:var(--teal)}.partners{display:flex;flex-wrap:wrap;gap:9px;max-width:540px;margin:28px 0}.partner{font-size:11px;padding:12px 15px;background:#13223cc9;border:1px solid #ffffff16;border-radius:5px}.skills{display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:540px}.skill{padding:22px;text-align:left}.skill b{display:block;font-size:16px;font-weight:500;margin-bottom:10px}.skill span{font-size:11px;line-height:1.8;color:var(--muted)}.skill i{display:block;font-style:normal;color:var(--teal);margin-top:20px}.stats{max-width:720px;padding:30px;margin-top:15px}.stats-top{display:flex;justify-content:space-between;gap:24px;align-items:center}.big-number{font-size:clamp(44px,6vw,76px);font-weight:400;letter-spacing:-4px;line-height:1.1}.big-number span{color:var(--teal)}.stat-label{font-size:10px;letter-spacing:1px;color:var(--muted);margin-top:12px}.chart-box{height:170px;margin:30px 0 10px}.chart-note{font-size:10px;color:var(--muted);line-height:1.7}.ages{display:flex;gap:8px;flex-wrap:wrap;margin-top:20px}.age{border:1px solid #ffffff20;border-radius:30px;background:none;padding:10px 16px;font-size:11px}.age[aria-pressed=true]{background:var(--teal);color:#061722;border-color:var(--teal)}#ageInfo{font-size:11px;min-height:42px;margin-bottom:0}footer{position:relative;z-index:5;border-top:1px solid #ffffff12;margin:0 8%;padding:30px 0;display:flex;justify-content:space-between;gap:20px;color:var(--muted);font-size:10px}.progress{position:fixed;bottom:0;left:0;height:2px;background:var(--teal);z-index:50;width:0}.film{position:fixed;inset:0;z-index:3;pointer-events:none;opacity:0}.film video{width:100%;height:100%;object-fit:cover}.film:after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,#070b19d9,transparent 80%)}#heroFilm{z-index:1}.media-warning{font-size:10px;color:var(--muted);margin-top:14px}.model-label{position:fixed;bottom:20px;right:26px;z-index:15;font-size:8px;letter-spacing:1.3px;color:#90a2b8;pointer-events:none}dialog{background:#0c1628;color:white;border:1px solid #ffffff24;border-radius:16px;width:min(520px,90vw);padding:36px;box-shadow:0 30px 160px #0009}dialog::backdrop{background:#020611ba;backdrop-filter:blur(12px)}dialog h2{font-size:34px;margin-top:20px}dialog p{line-height:1.9}dialog .close{position:absolute;right:15px;top:10px;border:0;background:transparent;font-size:25px}.bottom-cue{margin-top:42px;font-size:9px;color:#9aa9bf;letter-spacing:2px}.bottom-cue span{color:var(--teal);margin-right:15px}#renderNotice{position:fixed;bottom:24px;left:24px;z-index:40;font-size:11px;color:var(--muted);max-width:260px}.noscript{padding:120px 8% 20px;color:var(--gold)}@media(max-width:760px){header{padding:20px 6%}nav{display:none}header .pill{font-size:8px;padding:10px}.brand{font-size:14px}.brand small{font-size:7px}section{padding:130px 7% 80px;min-height:105svh}.shade{background:linear-gradient(90deg,#070b19ef,#070b1990 75%,#070b1950)}.rail{right:12px}.hero-meta{gap:22px}.hero-meta div+div{padding-left:22px}.scene-caption{display:none}.chapter{right:9%;top:97px}.stats{padding:22px}.stats-top{align-items:start;flex-direction:column;gap:10px}.skills{gap:8px}.skill{padding:18px}.model-label{font-size:7px;right:15px}.big-number{letter-spacing:-2px}footer{flex-direction:column}.hero-meta strong{font-size:20px}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}.film{display:none!important}}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#070B19">
+  <meta name="description" content="Центр «Ключевский»: интерактивная презентация для Стратегического совета — 2026.">
+  <title>Ключевский — Стратегический совет 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+  <style>
+    :root { color-scheme:dark; --ink:#070B19; --panel:rgba(11,19,37,.83); --line:rgba(191,225,241,.18); --text:#f4f9fd; --muted:#b5c5d5; --teal:#2AB7CA; --navy:#144192; --gold:#F4D03F; }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; scroll-padding-top:76px; }
+    body { margin:0; overflow-x:hidden; background:var(--ink); color:var(--text); font-family:Manrope,Inter,system-ui,sans-serif; }
+    button,a { -webkit-tap-highlight-color:transparent; }
+    button { font:inherit; cursor:pointer; color:inherit; }
+    a { color:inherit; text-decoration:none; }
+    :focus-visible { outline:2px solid var(--gold); outline-offset:4px; }
+    ::selection { color:#001621; background:var(--teal); }
+    .sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+    .skip { position:fixed; z-index:100; top:-70px; left:20px; padding:12px 18px; background:var(--teal); color:#06111e; border-radius:8px; }
+    .skip:focus { top:20px; }
+    .grain { position:fixed; inset:0; z-index:35; pointer-events:none; opacity:.12; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' opacity='.24' filter='url(%23n)'/%3E%3C/svg%3E"); }
+    .progress { position:fixed; z-index:60; inset:0 auto auto 0; width:0; height:3px; background:linear-gradient(90deg,var(--navy),var(--teal)); box-shadow:0 0 18px var(--teal); }
+    .site-header { position:fixed; z-index:50; inset:0 0 auto; height:78px; padding:0 clamp(20px,4vw,70px); display:flex; align-items:center; gap:28px; background:linear-gradient(180deg,rgba(7,11,25,.97),rgba(7,11,25,.77)); border-bottom:1px solid rgba(255,255,255,.09); backdrop-filter:blur(24px); -webkit-backdrop-filter:blur(24px); }
+    .brand { display:flex; align-items:center; gap:13px; flex-shrink:0; }
+    .brand-image { width:148px; height:49px; padding:5px 9px; display:grid; place-items:center; border-radius:5px; background:#f7fbff; }
+    .brand-image img { display:block; width:100%; height:100%; object-fit:contain; }
+    .brand-label { border-left:1px solid #ffffff35; padding-left:13px; font-size:10px; line-height:1.5; font-weight:700; letter-spacing:.11em; text-transform:uppercase; color:#d6eaf3; }
+    .nav { display:flex; align-items:center; gap:clamp(12px,2vw,33px); margin-left:auto; }
+    .nav a { font-size:11px; font-weight:700; color:#b5c5d5; transition:color .2s; white-space:nowrap; }
+    .nav a:hover,.nav a[aria-current="location"] { color:var(--teal); }
+    .header-badge { display:flex; align-items:center; gap:9px; white-space:nowrap; font-size:10px; letter-spacing:.13em; font-weight:800; text-transform:uppercase; color:#d8ebf3; }
+    .header-badge:before,.live:before { content:""; display:inline-block; width:7px; height:7px; border-radius:50%; background:var(--teal); box-shadow:0 0 0 5px #2ab7ca26,0 0 16px var(--teal); }
+    .rail { position:fixed; z-index:45; top:50%; right:clamp(12px,2.5vw,40px); transform:translateY(-50%); display:grid; gap:14px; }
+    .rail a { display:block; width:7px; height:7px; border-radius:50%; background:#e5f8ff70; transition:background .2s,box-shadow .2s,transform .2s; }
+    .rail a[aria-current="location"] { background:var(--teal); box-shadow:0 0 0 5px #2ab7ca33; transform:scale(1.15); }
+    .act { position:relative; min-height:100svh; isolation:isolate; display:flex; align-items:center; overflow:hidden; background:#07101d; }
+    .act:before { content:""; position:absolute; inset:0; z-index:-1; background:linear-gradient(90deg,rgba(4,9,21,.95) 0%,rgba(6,14,29,.85) 37%,rgba(7,13,26,.3) 76%),linear-gradient(0deg,rgba(3,8,20,.8),transparent 32%,rgba(4,9,22,.25)); }
+    .scene-media { position:absolute; z-index:-2; inset:0; overflow:hidden; background:linear-gradient(120deg,#102743,#07101d); }
+    .scene-media img,.scene-media video { width:100%; height:100%; display:block; object-fit:cover; }
+    .scene-media img { transform:scale(1.045); will-change:transform; }
+    .scene-media video { background:#07101d; }
+    .scene-media .fallback { position:absolute; inset:0; width:100%; height:100%; opacity:0; transition:opacity .4s; }
+    .scene-media.failed .fallback { opacity:1; }
+    .scene-media.failed video { opacity:0; }
+    .act-inner { position:relative; width:min(100% - 12vw,1500px); margin:auto; padding:130px 0 90px; }
+    .chapter { display:flex; align-items:center; gap:15px; margin-bottom:27px; color:var(--teal); font-size:11px; font-weight:800; letter-spacing:.27em; text-transform:uppercase; }
+    .chapter:before { content:""; width:30px; height:1px; background:var(--teal); }
+    h1,h2,h3,p { margin-top:0; }
+    h1 { max-width:1080px; margin-bottom:26px; font-size:clamp(43px,5.5vw,98px); line-height:1.08; letter-spacing:-.065em; font-weight:600; text-wrap:balance; }
+    h2 { max-width:850px; margin-bottom:22px; font-size:clamp(38px,5vw,76px); line-height:1.09; letter-spacing:-.065em; font-weight:600; text-wrap:balance; }
+    h3 { font-size:clamp(20px,2vw,28px); line-height:1.2; letter-spacing:-.04em; font-weight:600; }
+    .accent { color:var(--teal); }
+    .lede { max-width:650px; font-size:clamp(15px,1.4vw,18px); line-height:1.75; color:#e1edf7; }
+    .muted { color:var(--muted); }
+    .kicker { font-size:10px; font-weight:800; text-transform:uppercase; letter-spacing:.19em; color:var(--teal); }
+    .glass { background:var(--panel); border:1px solid var(--line); box-shadow:0 24px 80px #0206137d,inset 0 1px #ffffff16; backdrop-filter:blur(25px); -webkit-backdrop-filter:blur(25px); }
+    .cta { display:inline-flex; align-items:center; justify-content:space-between; gap:44px; min-height:54px; padding:0 20px; border:1px solid var(--teal); border-radius:8px; background:var(--teal); color:#041824; font-size:12px; font-weight:800; transition:transform .2s,background .2s; }
+    .cta:hover { transform:translateY(-3px); background:#63d6e6; }
+    .cta.secondary { color:#e5f7fa; background:#101d31b8; border-color:#d5eff45a; }
+    .cta.secondary:hover { background:#1b3646; }
+    .hero { align-items:flex-end; }
+    .hero:before { background:linear-gradient(90deg,rgba(3,8,19,.93) 0%,rgba(4,11,25,.74) 45%,rgba(5,12,26,.15) 100%),linear-gradient(0deg,#070b19db,transparent 58%); }
+    .hero .scene-media { background:radial-gradient(circle at 75% 38%,#16505e,#07101d 58%); }
+    .hero .act-inner { padding-top:160px; padding-bottom:clamp(80px,12vh,150px); }
+    .hero h1 { max-width:1150px; }
+    .hero .lede { max-width:670px; }
+    .hero-actions { display:flex; flex-wrap:wrap; gap:12px; margin-top:32px; }
+    .hero-footer { display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:space-between; gap:24px; margin-top:clamp(55px,11vh,130px); border-top:1px solid #ffffff42; padding-top:20px; font-size:10px; font-weight:800; letter-spacing:.17em; text-transform:uppercase; color:#d4e6ef; }
+    .hero-footer span:first-child { color:var(--teal); }
+    .hero-side { position:absolute; right:0; top:48%; writing-mode:vertical-rl; font-size:10px; letter-spacing:.3em; font-weight:800; color:#d5ebf3; }
+    .campus { min-height:170svh; align-items:stretch; }
+    .campus .scene-media { position:absolute; inset:0; height:100%; }
+    .campus .scene-media:after { content:""; position:absolute; inset:0; background:linear-gradient(90deg,#06111fdc,#07142b5e 68%),linear-gradient(0deg,#07101d9e,transparent); }
+    .campus .act-inner { min-height:170svh; padding-top:150px; padding-bottom:110px; display:flex; flex-direction:column; justify-content:space-between; }
+    .campus-copy { max-width:740px; }
+    .campus-card { width:min(100%,455px); margin:140px 0 0 auto; padding:30px; border-radius:14px; }
+    .campus-card strong { display:block; margin:14px 0 5px; font-size:clamp(38px,4.4vw,68px); line-height:1; letter-spacing:-.06em; }
+    .campus-card p { color:#cbdbe8; font-size:13px; line-height:1.75; margin-bottom:0; }
+    .scrub-hint { display:flex; align-items:center; gap:14px; margin-top:28px; font-size:11px; color:#d3e8f2; }
+    .scrub-bar { width:90px; height:3px; background:#ffffff5e; overflow:hidden; border-radius:3px; }
+    .scrub-bar i { display:block; height:100%; width:0; background:var(--teal); }
+    .campus-replay { border:0; background:transparent; color:var(--teal); padding:4px; font-weight:800; text-decoration:underline; text-underline-offset:4px; }
+    .split { display:grid; grid-template-columns:minmax(0,1fr) minmax(330px,460px); align-items:center; gap:clamp(24px,5vw,90px); }
+    .hall:before { background:linear-gradient(90deg,#07101de6 0%,#07101db8 48%,#07101d49 100%),linear-gradient(0deg,#07101dbd,transparent 50%); }
+    .hall .scene-media img { object-position:center 42%; }
+    .tabs { display:flex; flex-wrap:wrap; gap:8px; margin:28px 0 16px; }
+    .tab { border:1px solid #dcefff51; border-radius:100px; padding:11px 16px; background:#0d1b31a8; font-size:12px; font-weight:700; transition:background .2s,border-color .2s,color .2s; }
+    .tab:hover,.tab[aria-selected="true"] { border-color:var(--teal); background:var(--teal); color:#071320; }
+    .detail-card { min-height:176px; max-width:540px; padding:27px; border-radius:13px; }
+    .detail-card h3 { margin:12px 0 10px; }
+    .detail-card p { margin:0; font-size:13px; line-height:1.7; color:#d3e2ed; }
+    .cube-stage { position:relative; min-height:390px; display:grid; place-items:center; perspective:850px; }
+    .cube-stage:before { content:""; position:absolute; width:280px; height:280px; border:1px solid #77e7f255; border-radius:50%; box-shadow:0 0 70px #2ab7ca2e,inset 0 0 50px #2ab7ca18; transform:rotateX(73deg) translateY(130px); }
+    .cube { position:relative; width:184px; height:184px; transform-style:preserve-3d; transform:rotateX(-17deg) rotateY(-28deg); transition:transform .85s cubic-bezier(.2,.8,.2,1); filter:drop-shadow(0 30px 36px #000b); }
+    .cube-face { position:absolute; inset:0; border:1px solid #a2f5ffb0; background:linear-gradient(140deg,#2ab7ca58,#14419288); box-shadow:inset 0 0 35px #b3eff42e; backdrop-filter:blur(8px); display:grid; place-items:center; text-align:center; font-size:14px; font-weight:800; letter-spacing:.13em; text-transform:uppercase; }
+    .cube-face:nth-child(1) { transform:translateZ(92px); }
+    .cube-face:nth-child(2) { transform:rotateY(90deg) translateZ(92px); }
+    .cube-face:nth-child(3) { transform:rotateY(180deg) translateZ(92px); }
+    .cube-face:nth-child(4) { transform:rotateY(-90deg) translateZ(92px); }
+    .cube-face:nth-child(5) { transform:rotateX(90deg) translateZ(92px); }
+    .cube-face:nth-child(6) { transform:rotateX(-90deg) translateZ(92px); }
+    .cube-caption { position:absolute; bottom:6px; font-size:10px; font-weight:800; letter-spacing:.2em; color:#b7e7ee; text-transform:uppercase; }
+    .hub:before { background:linear-gradient(90deg,#061020f2,#07101ddd 52%,#07101d75),linear-gradient(0deg,#07101ddb,transparent 55%); }
+    .hub .scene-media img { object-position:center 47%; }
+    .partner-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:9px; margin-top:30px; max-width:740px; }
+    .partner { min-height:57px; padding:10px 12px; border:1px solid #ffffff43; border-radius:7px; background:#0d1b30c9; font-size:12px; font-weight:800; text-align:left; transition:border-color .2s,background .2s; }
+    .partner:hover,.partner[aria-pressed="true"] { border-color:var(--teal); background:#163347ed; }
+    .partner:after { content:"↗"; float:right; color:var(--teal); }
+    .partner-detail { max-width:740px; min-height:76px; padding:17px 21px; margin-top:10px; border-radius:8px; font-size:12px; line-height:1.55; color:#d5e4ed; }
+    .partner-detail strong { color:#f4f9fd; margin-right:8px; }
+    .skills-panel { padding:28px; border-radius:14px; }
+    .skills-panel h3 { margin:0 0 18px; }
+    .skill-switch { display:flex; gap:8px; margin-bottom:20px; }
+    .skill-switch button { padding:10px 15px; border:1px solid #ffffff38; border-radius:6px; background:#101b2e; font-size:11px; font-weight:800; }
+    .skill-switch button[aria-pressed="true"] { background:var(--teal); border-color:var(--teal); color:#031a23; }
+    .skill-list { display:grid; gap:10px; margin:0; padding:0; list-style:none; }
+    .skill-list li { display:flex; justify-content:space-between; padding:12px 0; border-bottom:1px solid #ffffff25; font-size:13px; font-weight:700; }
+    .skill-list li:after { content:"✦"; color:var(--teal); }
+    .skills-note { margin:22px 0 0; font-size:11px; line-height:1.65; color:#b8cbd8; }
+    .impact { min-height:115svh; }
+    .impact:before { background:linear-gradient(90deg,#061020ed 0%,#061020db 58%,#06102077),linear-gradient(0deg,#07101de8,transparent 60%); }
+    .impact .scene-media img { object-position:center 45%; }
+    .impact .act-inner { padding-top:140px; padding-bottom:100px; }
+    .dashboard { width:min(100%,1110px); display:grid; grid-template-columns:1fr 1.15fr; gap:1px; overflow:hidden; margin-top:35px; border-radius:16px; }
+    .dashboard > div { padding:clamp(22px,3vw,40px); background:#0c192de3; }
+    .dashboard .topline { display:flex; justify-content:space-between; gap:12px; font-size:10px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:#b6ccd9; }
+    .total { margin-top:22px; font-size:clamp(50px,6vw,88px); line-height:1; letter-spacing:-.075em; font-weight:600; }
+    .total .plus { color:var(--teal); }
+    .total-caption { margin:12px 0 28px; font-size:12px; color:#bfd0dd; line-height:1.6; }
+    .year-tabs,.ages { display:flex; flex-wrap:wrap; gap:7px; }
+    .year-tabs button,.ages button { padding:9px 12px; border:1px solid #ffffff38; border-radius:5px; background:transparent; font-size:11px; font-weight:700; }
+    .year-tabs button[aria-pressed="true"],.ages button[aria-pressed="true"] { color:#061926; background:var(--teal); border-color:var(--teal); }
+    .year-note,.age-note { min-height:48px; margin:14px 0 0; font-size:11px; line-height:1.6; color:#c7d8e4; }
+    .chart-wrap { position:relative; height:198px; margin:20px 0 14px; }
+    .chart-wrap canvas { width:100%; height:100%; }
+    .chart-fallback { display:none; color:#c7d8e4; font-size:12px; }
+    .chart-note { font-size:10px; line-height:1.6; color:#b1c5d1; margin-bottom:0; }
+    .gallery-open { margin-top:22px; padding:0; border:0; border-bottom:1px solid var(--teal); background:none; color:var(--teal); font-size:12px; font-weight:800; }
+    .gallery-open:hover { color:#9aebf5; }
+    .footer { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:15px; padding:28px 6vw; border-top:1px solid #ffffff20; background:#070b19; font-size:10px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:#b8cbd7; }
+    .footer a { color:var(--teal); }
+    dialog { max-width:min(1000px,calc(100vw - 28px)); width:100%; max-height:calc(100svh - 28px); padding:0; overflow:auto; border:1px solid #ffffff42; border-radius:14px; background:#0b172b; color:#fff; box-shadow:0 30px 100px #000a; }
+    dialog::backdrop { background:#020713da; backdrop-filter:blur(10px); }
+    .gallery-media { width:100%; max-height:70svh; object-fit:contain; background:#020713; display:block; }
+    .gallery-controls { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; padding:18px 22px; }
+    .gallery-controls p { margin:0; font-size:12px; color:#d8e7f0; }
+    .gallery-buttons { display:flex; gap:8px; }
+    .gallery-buttons button { width:40px; height:40px; border:1px solid #ffffff5c; border-radius:5px; background:#1a2c41; }
+    .gallery-buttons button:hover { border-color:var(--teal); }
+    @media(max-width:1050px) { .header-badge { display:none; } .split { grid-template-columns:1fr; } .cube-stage { min-height:260px; position:absolute; right:6vw; top:100px; opacity:.65; pointer-events:none; } .hall .act-inner { padding-top:380px; } .skills-panel { max-width:600px; } }
+    @media(max-width:720px) {
+      .site-header { height:66px; padding:0 16px; }
+      .brand-image { width:116px; height:39px; padding:4px 6px; }
+      .brand-label { font-size:8px; padding-left:9px; }
+      .nav { display:none; }
+      .rail { right:12px; gap:13px; }
+      .act-inner { width:calc(100% - 44px); padding-top:110px; padding-bottom:80px; }
+      .hero .act-inner { padding-top:130px; padding-bottom:72px; }
+      .hero-side { display:none; }
+      .hero-footer { font-size:8px; margin-top:80px; }
+      h1 { font-size:clamp(39px,9vw,64px); }
+      h2 { font-size:clamp(37px,9vw,54px); }
+      .chapter { font-size:9px; letter-spacing:.2em; }
+      .act:before,.hero:before { background:linear-gradient(90deg,#06101de8,#06101d9e),linear-gradient(0deg,#06101dcc,transparent); }
+      .campus { min-height:150svh; }
+      .campus .act-inner { min-height:150svh; }
+      .campus-card { margin-top:70px; }
+      .cube-stage { top:115px; right:10vw; transform:scale(.73); transform-origin:top right; }
+      .hall .act-inner { padding-top:360px; }
+      .partner-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+      .dashboard { grid-template-columns:1fr; }
+      .dashboard > div { padding:24px; }
+      .footer { font-size:9px; }
+    }
+    @media(prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } *,*:before,*:after { animation-duration:.01ms!important; transition-duration:.01ms!important; } .scene-media img { transform:none!important; } }
+  </style>
 </head>
 <body>
-<div id="world" aria-hidden="true"></div><div class="shade"></div><div class="grain"></div>
-<div class="film" id="heroFilm"><video id="heroVideo" muted loop playsinline preload="metadata" src="./assets/videos/fin-2.mp4"></video></div>
-<div class="film" id="droneFilm"><video id="droneVideo" muted playsinline preload="metadata" src="./assets/videos/4.mp4"></video></div>
-<div class="film" id="diveFilm"><video id="diveVideo" muted playsinline preload="metadata" src="./assets/videos/roof_dive.mp4"></video></div>
-<header><a class="brand" href="#intro"><span class="mark">К</span><span>Ключевский<small>РЕГИОНАЛЬНЫЙ ЦЕНТР</small></span></a><nav aria-label="Основная навигация"><a href="#campus">Кампус</a><a href="#tracks">Направления</a><a href="#hub">IT-хаб</a><a href="#impact">Влияние</a></nav><button class="pill" id="motionToggle" aria-pressed="false"><span class="live"></span>Пауза движения</button></header>
-<div class="rail" aria-label="Сцены"><a href="#intro" aria-label="Вступление"></a><a href="#campus" aria-label="Кампус"></a><a href="#tracks" aria-label="Направления"></a><a href="#hub" aria-label="IT-хаб"></a><a href="#impact" aria-label="Результаты"></a></div>
-<noscript><p class="noscript">Для интерактивной 3D-экскурсии включите JavaScript. Основное содержание доступно ниже.</p></noscript>
-<main>
-<section id="intro"><div class="eyebrow">Место, где начинается будущее</div><div class="intro"><h1>Твой талант.<br>Твоя <em>траектория.</em></h1><p>Наука, искусство и спорт в одном пространстве.<br>Открой региональный центр «Ключевский» —<br>от первого интереса до больших возможностей.</p><div class="actions"><a class="primary" href="#campus">Исследовать кампус <span>↗</span></a><button class="ghost" id="playIntro">Смотреть интро ▷</button></div><div id="introStatus" class="media-warning" role="status"></div></div><div class="hero-meta"><div><strong>03</strong>НАПРАВЛЕНИЯ</div><div><strong>16 276+</strong>УЧАСТНИКОВ</div><div><strong>∞</strong>ВОЗМОЖНОСТЕЙ</div></div><div class="bottom-cue"><span>↓</span>ЛИСТАЙТЕ, ЧТОБЫ ОТКРЫТЬ БОЛЬШЕ</div><div class="scene-caption"><b>КЛЮЧЕВСКИЙ / DIGITAL CAMPUS</b><br>НАУКА · ИСКУССТВО · СПОРТ</div></section>
-<section id="campus"><div class="chapter">01 / КАМПУС</div><div class="eyebrow">Взгляд с новой высоты</div><h2>Пространство<br>для <em>открытий.</em></h2><p>Маршрут начинается снаружи. Движение вниз по странице приближает кампус и ведёт через крышу в образовательное пространство.</p><div class="scene-card glass"><small>01 — ЭКСТЕРЬЕР</small><h3>От общего плана к деталям</h3><p>Лаборатории, творческие площадки и места для встреч объединены одной идеей: дать таланту пространство для роста.</p><a href="#tracks" class="eyebrow" style="margin:20px 0 0">Войти в кампус ↘</a></div><div class="scene-caption"><b>SCROLL TO EXPLORE</b><br>ЭКСТЕРЬЕР → ТРЕТИЙ ЭТАЖ</div></section>
-<section id="tracks"><div class="chapter">02 / ТРЕТИЙ ЭТАЖ</div><div class="eyebrow">Три направления. Один центр.</div><h2>Найди свою<br><em>точку притяжения.</em></h2><p>Интерактивный LED-куб — навигатор по направлениям. Выбери грань, чтобы узнать больше.</p><div class="track-list"><button class="track glass selected" data-track="science"><span class="icon">⌘</span><span><strong>Наука</strong><small>Исследовать. Создавать. Менять.</small></span><span class="arrow">↗</span></button><button class="track glass" data-track="art"><span class="icon" style="color:var(--gold)">✳</span><span><strong>Искусство</strong><small>Видеть. Чувствовать. Выражать.</small></span><span class="arrow">↗</span></button><button class="track glass" data-track="sport"><span class="icon">◈</span><span><strong>Спорт</strong><small>Двигаться. Расти. Достигать.</small></span><span class="arrow">↗</span></button></div><div class="scene-caption"><b>ИНТЕРАКТИВНЫЙ LED-КУБ</b><br>НАЖМИТЕ НА ГРАНЬ ИЛИ НАПРАВЛЕНИЕ</div></section>
-<section id="hub"><div class="chapter">03 / IT-ХАБ</div><div class="eyebrow">Технологии становятся практикой</div><h2>От первой строки<br>до <em>своего проекта.</em></h2><p>Знакомство с технологическими компаниями, инженерное мышление и навыки командной работы — в одном маршруте.</p><div class="partners" aria-label="Компании"><button class="partner" data-partner="Secon">Secon ↗</button><button class="partner" data-partner="BOGGART">BOGGART ↗</button><button class="partner" data-partner="Infotecs">Infotecs ↗</button><button class="partner" data-partner="Tortuga">Tortuga ↗</button><button class="partner" data-partner="CodeInside">CodeInside ↗</button><button class="partner" data-partner="Smarta">Smarta ↗</button><button class="partner" data-partner="Okdesk">Okdesk ↗</button></div><div class="skills"><button class="skill glass" data-info="hard"><b>Hard skills</b><span>Код, данные и инструменты.<br>От гипотезы до прототипа.</span><i>Изучить навыки ↗</i></button><button class="skill glass" data-info="soft"><b>Soft skills</b><span>Команда, общение и идеи.<br>От задачи до общего результата.</span><i>Изучить навыки ↗</i></button></div></section>
-<section id="impact"><div class="chapter">04 / АКТОВЫЙ ЗАЛ</div><div class="eyebrow">В центре — люди</div><h2>Большие идеи.<br><em>Реальное влияние.</em></h2><div class="stats glass"><div class="stats-top"><div><div class="big-number"><span id="counter">16 276</span>+</div><div class="stat-label">ОБЩЕЕ КОЛИЧЕСТВО УЧАСТНИКОВ</div></div><div class="pill">2024 — 2026</div></div><div class="chart-box"><canvas id="dynamics" role="img" aria-label="Динамика 2024–2026: годовые значения не предоставлены"></canvas></div><div class="chart-note" id="chartNote">Динамика 2024–2026: годовые значения ожидают подтверждения. Общий показатель предоставлен в брифе.</div><div class="ages" aria-label="Возрастные группы"><button class="age" aria-pressed="true" data-age="middle">5–9 классы</button><button class="age" aria-pressed="false" data-age="senior">8–11 классы</button><button class="age" aria-pressed="false" data-age="college">СПО</button></div><p id="ageInfo">5–9 классы · Знакомство с направлениями, первые исследования и командные проекты.</p></div></section>
-</main><footer><span>КЛЮЧЕВСКИЙ · ПРОСТРАНСТВО ВОЗМОЖНОСТЕЙ</span><a href="#intro">В начало ↑</a></footer>
-<div class="progress" id="progress"></div><div class="model-label">КОНЦЕПТУАЛЬНАЯ 3D-ВИЗУАЛИЗАЦИЯ</div><div id="renderNotice" role="status"></div>
-<dialog id="detail"><button class="close" aria-label="Закрыть">×</button><div class="eyebrow" id="modalTag">Ключевский</div><h2 id="modalTitle"></h2><p id="modalBody"></p><button class="primary" id="modalDone">Продолжить экскурсию →</button></dialog>
-<script>
-window.addEventListener('DOMContentLoaded',()=>{
-'use strict';
-// Replace null only with verified yearly values. Do not infer yearly totals from the cumulative total.
-const DATA={total:16276,years:[2024,2025,2026],participants:[null,null,null]};
-const ASSETS={images:'./assets/images/',intro:'./assets/videos/fin-2.mp4',drone:'./assets/videos/4.mp4',dive:'./assets/videos/roof_dive.mp4'};
-const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
-const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;let paused=reduce,phase=0,lenis=null,renderer=null,scene,camera,cube,campus,hall,hub,auditorium,raycaster,mouse,frame=0;
-const dialog=$('#detail');let restoreFocus=null;
-function show(title,body,tag='Ключевский'){restoreFocus=document.activeElement;$('#modalTitle').textContent=title;$('#modalBody').textContent=body;$('#modalTag').textContent=tag;dialog.showModal();lenis?.stop()}
-function close(){dialog.close()}
-$('#modalDone').onclick=close;$('#detail .close').onclick=close;dialog.addEventListener('click',e=>{if(e.target===dialog){const b=dialog.getBoundingClientRect();if(e.clientX<b.left||e.clientX>b.right||e.clientY<b.top||e.clientY>b.bottom)close()}});dialog.addEventListener('close',()=>{lenis?.start();restoreFocus?.focus()});
-const tracks={science:['Наука','Исследовательское мышление, программирование и инженерные проекты. Сформулируй вопрос, проверь гипотезу и представь своё решение.',0x2ab7ca],art:['Искусство','Визуальное мышление, творческий поиск и самовыражение. Пробуй новые формы и превращай собственный взгляд в законченный проект.',0xf4d03f],sport:['Спорт','Движение, дисциплина и командный дух. Развивай мастерство, учись работать на общий результат и находи свою следующую цель.',0x5683f5]};
-function chooseTrack(key){const t=tracks[key];$$('[data-track]').forEach(b=>b.classList.toggle('selected',b.dataset.track===key));if(cube)cube.material.forEach(m=>m.emissive.setHex(t[2]));show(t[0],t[1],'02 / НАПРАВЛЕНИЕ')}
-$$('[data-track]').forEach(b=>b.onclick=()=>chooseTrack(b.dataset.track));
-const skills={hard:['Hard skills','Программирование, алгоритмы, работа с данными, прототипирование и отладка. Практический маршрут: поставить задачу, собрать решение, проверить результат и показать работающий проект.'],soft:['Soft skills','Коммуникация, критическое мышление, командная работа и презентация. Практический маршрут: распределить роли, договориться о решении, принять обратную связь и представить результат.']};$$('[data-info]').forEach(b=>b.onclick=()=>show(...skills[b.dataset.info],'03 / НАВЫКИ'));
-$$('[data-partner]').forEach(b=>b.onclick=()=>show(b.dataset.partner,'Компания представлена в маршруте IT-хаба. Информация о конкретных совместных программах и мероприятиях будет добавлена после подтверждения центром.','03 / СТЕНД КОМПАНИИ'));
-const ages={middle:'5–9 классы · Знакомство с направлениями, первые исследования и командные проекты.',senior:'8–11 классы · Углубление интересов, проектная работа и выбор образовательной траектории.',college:'СПО · Прикладные задачи, профессиональные навыки и командная практика.'};$$('[data-age]').forEach(b=>b.onclick=()=>{$$('[data-age]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));$('#ageInfo').textContent=ages[b.dataset.age]});
-const videos=[$('#heroVideo'),$('#droneVideo'),$('#diveVideo')];videos.forEach(v=>{v.dataset.ready='false';v.addEventListener('loadeddata',()=>v.dataset.ready='true');v.addEventListener('error',()=>{v.dataset.ready='false';v.parentElement.style.opacity=0;if(v.id==='heroVideo')$('#introStatus').textContent='Видеовступление пока недоступно. Продолжите 3D-экскурсию.'})});
-$('#playIntro').onclick=async()=>{const v=videos[0];if(v.dataset.ready!=='true'){$('#introStatus').textContent='Видеовступление пока недоступно. Продолжите 3D-экскурсию.';return}if(!v.paused){v.pause();$('#heroFilm').style.opacity=0;$('#playIntro').textContent='Смотреть интро ▷';return}try{await v.play();$('#heroFilm').style.opacity=.65;$('#playIntro').textContent='Пауза интро Ⅱ'}catch{$('#introStatus').textContent='Не удалось запустить видео.'}};
-function toggleMotion(){paused=!paused;updateMotion();if(paused)videos.forEach(v=>v.pause())}function updateMotion(){$('#motionToggle').setAttribute('aria-pressed',String(paused));$('#motionToggle').innerHTML='<span class="live"></span>'+(paused?'Включить движение':'Пауза движения')};$('#motionToggle').onclick=toggleMotion;updateMotion();
-if(window.Lenis&&!reduce){lenis=new Lenis({duration:1.05,smoothWheel:true});lenis.on('scroll',()=>window.ScrollTrigger?.update())}
-if(window.Chart){Chart.defaults.color='#9aa9bf';Chart.defaults.font.family='Arial';new Chart($('#dynamics'),{type:'line',data:{labels:DATA.years,datasets:[{label:'Участники за год',data:DATA.participants,borderColor:'#2AB7CA',backgroundColor:'#2AB7CA22',fill:true,tension:.35,pointRadius:4,spanGaps:false}]},options:{responsive:true,maintainAspectRatio:false,animation:!reduce,plugins:{legend:{display:false}},scales:{x:{grid:{display:false},border:{display:false}},y:{beginAtZero:true,suggestedMax:20000,grid:{color:'#ffffff09'},border:{display:false},ticks:{callback:v=>v>=1000?v/1000+' тыс.':v}}}},plugins:[{id:'emptyState',afterDraw(chart){if(DATA.participants.every(v=>v===null)){const{ctx,chartArea:a}=chart;ctx.save();ctx.textAlign='center';ctx.fillStyle='#9aa9bf';ctx.font='11px Arial';ctx.fillText('Годовые данные ещё не добавлены',(a.left+a.right)/2,(a.top+a.bottom)/2);ctx.restore()}}}]})}else $('#chartNote').textContent+=' График недоступен: библиотека не загрузилась.';
-if(window.gsap&&window.ScrollTrigger){gsap.registerPlugin(ScrollTrigger);if(!reduce){const n={value:0};gsap.to(n,{value:DATA.total,duration:2,ease:'power2.out',scrollTrigger:{trigger:'#impact',start:'top 65%',once:true},onUpdate:()=>$('#counter').textContent=Math.round(n.value).toLocaleString('ru-RU')})}}
-function labelTexture(text,color='#2AB7CA'){const c=document.createElement('canvas');c.width=512;c.height=256;const ctx=c.getContext('2d');ctx.fillStyle='#0a1729';ctx.fillRect(0,0,512,256);ctx.strokeStyle=color;ctx.lineWidth=5;ctx.strokeRect(12,12,488,232);ctx.fillStyle=color;ctx.font='bold 44px Arial';ctx.textAlign='center';ctx.fillText(text,256,142);const tex=new THREE.CanvasTexture(c);return tex}
-function init3D(){if(!window.THREE)throw Error('Three unavailable');scene=new THREE.Scene();scene.fog=new THREE.FogExp2(0x070b19,.021);camera=new THREE.PerspectiveCamera(42,innerWidth/innerHeight,.1,180);renderer=new THREE.WebGLRenderer({antialias:true,alpha:true,powerPreference:'low-power'});renderer.setPixelRatio(Math.min(devicePixelRatio,1.7));renderer.setSize(innerWidth,innerHeight);renderer.outputEncoding=THREE.sRGBEncoding;$('#world').appendChild(renderer.domElement);scene.add(new THREE.HemisphereLight(0xb4e8ff,0x101426,1.25));const light=new THREE.DirectionalLight(0xffffff,1.6);light.position.set(8,15,10);scene.add(light);const teal=new THREE.PointLight(0x2ab7ca,2,50);teal.position.set(2,5,3);scene.add(teal);
-function box(parent,w,h,d,x,y,z,color,metal=.1){const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),new THREE.MeshStandardMaterial({color,metalness:metal,roughness:.5}));m.position.set(x,y,z);parent.add(m);return m}
-function sign(parent,text,x,y,z,w=2.3,h=1.15,color='#2AB7CA'){const m=new THREE.Mesh(new THREE.PlaneGeometry(w,h),new THREE.MeshBasicMaterial({map:labelTexture(text,color)}));m.position.set(x,y,z);parent.add(m);return m}
-campus=new THREE.Group();scene.add(campus);campus.position.x=4;box(campus,25,.4,19,0,-.3,0,0x0c2130);box(campus,12,3.5,5,0,1.7,0,0xd7dfdc);box(campus,4,5.5,7,-5,2.7,-2,0x144192);box(campus,3,4.1,6,5.1,2,-1,0x2ab7ca);box(campus,12.7,.25,5.7,0,3.55,0,0x493327);for(let i=0;i<12;i++)for(let j=0;j<3;j++)box(campus,.62,.56,.06,-5.3+i*.96,.7+j*.93,2.54,0x2f7184,.65);box(campus,2.2,2,.12,0,.9,2.65,0x19313f);box(campus,3,.16,4,0,.06,4.6,0x647c80);sign(campus,'КЛЮЧЕВСКИЙ',0,3,2.7,4.1,.75);const ring=new THREE.Mesh(new THREE.TorusGeometry(12,.014,8,100),new THREE.MeshBasicMaterial({color:0x2ab7ca,transparent:true,opacity:.35}));ring.rotation.x=-Math.PI/2;ring.position.y=-.05;campus.add(ring);for(let i=0;i<14;i++){const x=Math.sin(i*1.7)*10,z=Math.cos(i*1.7)*7;box(campus,.13,1.3,.13,x,.6,z,0x605543);const tree=new THREE.Mesh(new THREE.IcosahedronGeometry(.7,0),new THREE.MeshStandardMaterial({color:0x245e56}));tree.position.set(x,1.6,z);campus.add(tree)}
-function corridor(){const g=new THREE.Group();box(g,12,.2,40,0,-.15,-12,0xadbabf,.4);box(g,.25,6,40,-6,2.8,-12,0x2ab7ca);box(g,.25,6,40,6,2.8,-12,0x278c9c);box(g,12,.1,40,0,5.9,-12,0xe5e8e7);for(let z=7;z>-31;z-=1.3)box(g,12,.09,.06,0,5.75,z,0x7c969f);for(let x=-5.8;x<6;x+=.8)box(g,.055,.1,40,x,5.74,-12,0x7c969f);for(let z=2;z>-30;z-=6){box(g,.09,3.5,2.3,-5.82,1.65,z,0x12313e);box(g,.09,3.5,2.3,5.82,1.65,z,0x12313e);box(g,5,.03,.35,0,5.65,z,0xffffff)}scene.add(g);return g}
-hall=corridor();const mats=['НАУКА','ИСКУССТВО','СПОРТ','НАУКА','СПОРТ','ИСКУССТВО'].map((t,i)=>new THREE.MeshStandardMaterial({map:labelTexture(t,i%2?'#F4D03F':'#2AB7CA'),emissive:0x2ab7ca,emissiveIntensity:.22,metalness:.25,roughness:.25}));cube=new THREE.Mesh(new THREE.BoxGeometry(2.7,2.7,2.7),mats);cube.position.set(2.2,2.8,-2);hall.add(cube);box(hall,3.5,.2,3.5,2.2,.05,-2,0x144192);
-hub=corridor();['Secon','BOGGART','Infotecs','Tortuga','CodeInside','Smarta','Okdesk'].forEach((name,i)=>{const x=i%2?4.3:-4.3,z=3-Math.floor(i/2)*7;box(hub,2.4,2.8,.45,x,1.3,z,0x144192);sign(hub,name,x,2,z+.25,2.2,1);box(hub,2.6,.12,1.2,x,.2,z+.3,0x2ab7ca)});
-auditorium=new THREE.Group();scene.add(auditorium);box(auditorium,24,.25,32,0,-.3,-8,0x111d31);box(auditorium,17,.65,6,0,.15,-16,0x5d4432);box(auditorium,18,8,.5,0,3.7,-20,0x144192);sign(auditorium,'16 276+',0,4.1,-19.68,12,5);for(let r=0;r<5;r++)for(let c=0;c<9;c++){const x=(c-4)*1.55,z=-10+r*2.8;box(auditorium,1.05,.2,1.1,x,.75,z,0x93643e);box(auditorium,1.05,1.2,.2,x,1.3,z+.45,0xa37347);box(auditorium,.12,.6,1.2,x-.6,1,z,0x795334);box(auditorium,.12,.6,1.2,x+.6,1,z,0x795334);box(auditorium,.65,.7,.55,x,.35,z,0x222c39)}raycaster=new THREE.Raycaster();mouse=new THREE.Vector2();window.addEventListener('click',e=>{if(phase<1.75||phase>2.75||e.target.closest('button,a,dialog'))return;mouse.set(e.clientX/innerWidth*2-1,-e.clientY/innerHeight*2+1);raycaster.setFromCamera(mouse,camera);const hits=raycaster.intersectObject(cube);if(hits.length)chooseTrack(['science','art','sport','science','sport','art'][hits[0].face.materialIndex])});renderer.domElement.addEventListener('webglcontextlost',e=>{e.preventDefault();$('#renderNotice').textContent='3D приостановлено. Текст и навигация остаются доступны.'});}
-try{init3D()}catch(e){$('#renderNotice').textContent='3D недоступно в этом браузере. Все разделы доступны ниже.'}
-const sections=$$('main section');let visible=true;document.addEventListener('visibilitychange',()=>{visible=!document.hidden;if(!visible)videos.forEach(v=>v.pause())});
-function scrub(v,p){if(v.dataset.ready==='true'&&Number.isFinite(v.duration)&&!v.seeking){const t=Math.max(0,Math.min(v.duration-.04,p*v.duration));if(Math.abs(v.currentTime-t)>.08)try{v.currentTime=t}catch{}}}
-function tick(time){requestAnimationFrame(tick);lenis?.raf(time);if(!visible)return;const y=scrollY,h=innerHeight;let current=0;sections.forEach((s,i)=>{if(y+h*.45>=s.offsetTop)current=i});const s=sections[current],next=sections[current+1];phase=current+Math.max(0,Math.min(1,(y-s.offsetTop)/(next?next.offsetTop-s.offsetTop:s.offsetHeight)));$('#progress').style.width=(y/Math.max(1,document.documentElement.scrollHeight-h)*100)+'%';$$('.rail a').forEach((a,i)=>a.classList.toggle('active',i===current));$$('nav a').forEach(a=>a.classList.toggle('active',a.hash==='#'+s.id));if(current!==0){videos[0].pause();$('#heroFilm').style.opacity=0;$('#playIntro').textContent='Смотреть интро ▷'}const cp=(y-$('#campus').offsetTop)/$('#campus').offsetHeight;const drone=cp>=0&&cp<.68&&!paused,dive=cp>=.68&&cp<1&&!paused;$('#droneFilm').style.opacity=drone&&videos[1].dataset.ready==='true'?.78:0;$('#diveFilm').style.opacity=dive&&videos[2].dataset.ready==='true'?.9:0;if(drone)scrub(videos[1],cp/.68);if(dive)scrub(videos[2],(cp-.68)/.32);
-if(!renderer||!scene)return;if(paused&&frame++%6!==0)return;const t=paused?0:time*.001;campus.visible=current<2;hall.visible=current===2;hub.visible=current===3;auditorium.visible=current===4;
-if(current<2){const p=current===0?0:Math.min(1,Math.max(0,(y-s.offsetTop)/s.offsetHeight));camera.position.set(20-p*14,14+p*8,24-p*20);camera.lookAt(3,1,0);campus.rotation.y=paused?-.25:-.25+Math.sin(t*.12)*.06}else if(current===2){camera.position.set(.3,3.1,11);camera.lookAt(0,2.6,-5);cube.rotation.set(.15+Math.sin(t*.5)*.06,t*.16,.08);cube.position.y=2.8+Math.sin(t)*.13}else if(current===3){const p=Math.max(0,Math.min(1,(y-s.offsetTop)/s.offsetHeight));camera.position.set(.1,2.9,12-p*15);camera.lookAt(0,2.5,-25)}else{camera.position.set(9,7,14);camera.lookAt(0,2,-14)}renderer.render(scene,camera)}
-requestAnimationFrame(tick);window.addEventListener('resize',()=>{if(renderer){camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight)}window.ScrollTrigger?.refresh()});
-});
-</script>
-</body></html>
+  <a class="skip" href="#intro">К содержанию</a>
+  <div class="grain" aria-hidden="true"></div><div class="progress" id="progress" aria-hidden="true"></div>
+  <header class="site-header">
+    <a class="brand" href="#intro" aria-label="Ключевский — в начало">
+      <span class="brand-image"><img src="./assets/images/logo-black.png" alt="" width="1871" height="752"></span>
+      <span class="brand-label">Стратегический<br>совет 2026</span>
+    </a>
+    <nav class="nav" aria-label="Разделы"><a href="#campus">Кампус</a><a href="#hall">Направления</a><a href="#hub">Партнёры</a><a href="#impact">Результаты</a></nav>
+    <span class="header-badge">Интерактивная история</span>
+  </header>
+  <nav class="rail" aria-label="Переход по актам"><a href="#intro" aria-label="Вступление"></a><a href="#campus" aria-label="Кампус"></a><a href="#hall" aria-label="Направления"></a><a href="#hub" aria-label="Партнёры"></a><a href="#impact" aria-label="Результаты"></a></nav>
+  <main>
+    <section class="act hero" id="intro" aria-labelledby="intro-title">
+      <div class="scene-media" id="heroMedia">
+        <video id="heroVideo" src="./assets/videos/fin.mp4" autoplay muted loop playsinline preload="metadata" aria-hidden="true"></video>
+        <div class="fallback" aria-hidden="true" style="background:radial-gradient(circle at 75% 38%,#16505e,#07101d 58%)"></div>
+      </div>
+      <div class="act-inner">
+        <div class="chapter">Пензенская область / 2026</div>
+        <h1 id="intro-title">Центр выявления и поддержки одарённых детей <span class="accent">«Ключевский»</span></h1>
+        <p class="lede">Стратегический совет 2026. Пространство, в котором талант получает направление, поддержку и возможность стать результатом.</p>
+        <div class="hero-actions flex flex-wrap"><a class="cta" href="#campus">Начать погружение <span aria-hidden="true">↘</span></a><button class="cta secondary" id="heroSwitch" type="button" aria-pressed="false">Другой ракурс <span aria-hidden="true">↗</span></button></div>
+        <div class="hero-footer"><span>01 — 05 / Пять актов</span><span>Наука · Искусство · Спорт</span><span>Прокрутите вниз ↓</span></div>
+        <span class="hero-side" aria-hidden="true">КЛЮЧЕВСКИЙ / ИСТОРИЯ В ДВИЖЕНИИ</span>
+      </div>
+    </section>
+
+    <section class="act campus" id="campus" aria-labelledby="campus-title">
+      <div class="scene-media" id="campusMedia"><video id="campusVideo" src="./assets/videos/4.mp4" muted playsinline preload="metadata" aria-hidden="true"></video><div class="fallback" aria-hidden="true" style="background:linear-gradient(140deg,#155273,#07101d)"></div></div>
+      <div class="act-inner">
+        <div class="campus-copy"><div class="chapter">Акт 02 / Кампус</div><h2 id="campus-title">Масштаб для <span class="accent">нового мышления.</span></h2><p class="lede">Пролистайте пространство снаружи: видео следует за вашим движением, открывая кампус кадр за кадром.</p><div class="scrub-hint"><span>SCROLL / VIDEO</span><span class="scrub-bar" aria-hidden="true"><i id="scrubFill"></i></span><span id="scrubPercent">00%</span></div><button class="campus-replay" id="campusPlay" type="button" hidden>Смотреть видео с начала ↗</button></div>
+        <aside class="campus-card glass"><span class="kicker">Инфраструктура центра</span><strong>10 000+ м²</strong><p>Современный образовательный кампус с собственным спортивным ядром — место для учёбы, практики и встреч.</p></aside>
+      </div>
+    </section>
+
+    <section class="act hall" id="hall" aria-labelledby="hall-title">
+      <div class="scene-media"><img src="./assets/images/BIWh-bbzaOb-F1kLcEZg1cYu5cQUqbFZv9LDKrSjdfMHZ9EnFeZIBqJ-0zdus0iu2HT85rNHOstxBW2-WCtSCIBg.jpg" alt="Участники и гости в пространстве центра «Ключевский»" loading="lazy" width="2560" height="1709"></div>
+      <div class="act-inner split">
+        <div><div class="chapter">Акт 03 / Пространство направлений</div><h2 id="hall-title">Один центр.<br><span class="accent">Множество траекторий.</span></h2><p class="lede">Выберите грань маршрута. Интерактивный куб — цифровой навигатор по образовательным возможностям центра.</p>
+          <div class="tabs" role="tablist" aria-label="Направления" id="trackTabs"><button class="tab" type="button" role="tab" id="tab-science" aria-controls="trackPanel" aria-selected="true" tabindex="0" data-track="science">Наука</button><button class="tab" type="button" role="tab" id="tab-art" aria-controls="trackPanel" aria-selected="false" tabindex="-1" data-track="art">Искусство</button><button class="tab" type="button" role="tab" id="tab-sport" aria-controls="trackPanel" aria-selected="false" tabindex="-1" data-track="sport">Спорт</button><button class="tab" type="button" role="tab" id="tab-project" aria-controls="trackPanel" aria-selected="false" tabindex="-1" data-track="project">Проектные смены</button></div>
+          <div class="detail-card glass" id="trackPanel" role="tabpanel" aria-labelledby="tab-science" tabindex="0"><span class="kicker" id="trackKicker">01 / Исследование</span><h3 id="trackTitle">Наука начинается с вопроса.</h3><p id="trackBody">Исследования, инженерное мышление и работа с данными помогают превращать интерес в собственный проект.</p></div>
+        </div>
+        <div class="cube-stage" aria-hidden="true"><div class="cube" id="cube"><div class="cube-face">Наука</div><div class="cube-face">Искусство</div><div class="cube-face">Спорт</div><div class="cube-face">Проекты</div><div class="cube-face">Ключевский</div><div class="cube-face">2026</div></div><div class="cube-caption">Выберите направление ←</div></div>
+      </div>
+    </section>
+
+    <section class="act hub" id="hub" aria-labelledby="hub-title">
+      <div class="scene-media"><img src="./assets/images/pibsK73Adlp3kUbSubs9x7meQZVSOn7e1KGcfdXxWqu4Tf5_zVEGPcJZoQUoK5c-vpHTu2jg2L4spPHCu-hi84qG.jpg" alt="Встреча и обсуждение с участниками образовательной программы" loading="lazy" width="2560" height="1707"></div>
+      <div class="act-inner split">
+        <div><div class="chapter">Акт 04 / IT и партнёры</div><h2 id="hub-title">Идеи встречаются <span class="accent">с практикой.</span></h2><p class="lede">Проектная работа соединяет технические инструменты и навыки сотрудничества. Выберите участника партнёрской матрицы.</p>
+          <div class="partner-grid grid" aria-label="Партнёрская матрица"><button class="partner" type="button" data-partner="Secon" aria-pressed="true">Secon</button><button class="partner" type="button" data-partner="BOGGART" aria-pressed="false">BOGGART</button><button class="partner" type="button" data-partner="Infotecs" aria-pressed="false">Infotecs</button><button class="partner" type="button" data-partner="Tortuga" aria-pressed="false">Tortuga</button><button class="partner" type="button" data-partner="CodeInside" aria-pressed="false">CodeInside</button><button class="partner" type="button" data-partner="Smarta" aria-pressed="false">Smarta</button><button class="partner" type="button" data-partner="Okdesk" aria-pressed="false">Okdesk</button></div>
+          <div class="partner-detail glass" id="partnerDetail" role="status"><strong>Secon</strong> Участник партнёрской матрицы IT-направления.</div>
+        </div>
+        <div class="skills-panel glass"><span class="kicker">Матрица компетенций</span><h3>Навыки для следующего шага.</h3><div class="skill-switch" aria-label="Тип навыков"><button type="button" data-skill="hard" aria-pressed="true">Hard Skills</button><button type="button" data-skill="soft" aria-pressed="false">Soft Skills</button></div><ul class="skill-list" id="skillList"><li>Python и алгоритмы</li><li>Web-разработка</li><li>AI / ML и данные</li></ul><p class="skills-note">Направления компетенций для интерактивной карты; персональные результаты здесь не заявлены.</p></div>
+      </div>
+    </section>
+
+    <section class="act impact" id="impact" aria-labelledby="impact-title">
+      <div class="scene-media"><img src="./assets/images/WpxavZwHtc2TaDdmGp8xj93_2hwPF2-bY93QNVuFW0mc4rTZMjSL5gAZcOkaixfHKnSImotOIsRAc3ZYmDkXfo26.jpg" alt="Участники в зале центра «Ключевский»" loading="lazy" width="2560" height="1709"></div>
+      <div class="act-inner"><div class="chapter">Акт 05 / Люди и результаты</div><h2 id="impact-title">За каждой цифрой — <span class="accent">чья-то история.</span></h2><p class="lede">Интерактивная панель результатов. Годовые значения показываются только там, где они подтверждены исходной презентацией.</p>
+        <div class="dashboard glass grid">
+          <div><div class="topline"><span>Охват за 2025 год</span><span class="live">Подтверждено</span></div><div class="total"><span id="counter">16 276</span><span class="plus">+</span></div><p class="total-caption">участников · в исходной презентации указано 16 276 человек за 2025 год</p><span class="kicker">Возрастные группы</span><div class="ages" style="margin-top:15px"><button type="button" data-age="five" aria-pressed="true">5–9 классы</button><button type="button" data-age="eight" aria-pressed="false">8–11 классы</button><button type="button" data-age="spo" aria-pressed="false">СПО</button></div><p class="age-note" id="ageNote">5–9 классы · первые исследования и знакомство с направлениями.</p><button class="gallery-open" id="galleryOpen" type="button">Открыть фотогалерею ↗</button></div>
+          <div><div class="topline"><span>Динамика / 2024–2026</span><span>01 / 03</span></div><div class="chart-wrap"><canvas id="dynamics" role="img" aria-label="Динамика охвата: подтверждено 16 276 участников за 2025 год, значения за 2024 и 2026 годы не указаны"></canvas><p class="chart-fallback" id="chartFallback">2025 — 16 276 участников. Значения за 2024 и 2026 годы не подтверждены.</p></div><div class="year-tabs" aria-label="Выберите год"><button type="button" data-year="2024" aria-pressed="false">2024</button><button type="button" data-year="2025" aria-pressed="true">2025</button><button type="button" data-year="2026" aria-pressed="false">2026</button></div><p class="year-note" id="yearNote">2025 · 16 276 участников согласно исходной презентации Стратегического совета.</p><p class="chart-note">2024 и 2026 оставлены без значений: годовые итоги не были однозначно подписаны в доступных материалах. Линия не достраивается предположениями.</p></div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="footer"><span>© «Ключевский» · Стратегический совет 2026</span><span>Фотографии и видео из материалов центра</span><a href="#intro">Вернуться к началу ↑</a></footer>
+  <dialog id="gallery" aria-label="Фотогалерея Ключевского"><img class="gallery-media" id="galleryImage" alt=""><div class="gallery-controls"><p id="galleryCaption"></p><div class="gallery-buttons"><button id="galleryPrev" type="button" aria-label="Предыдущее фото">←</button><button id="galleryNext" type="button" aria-label="Следующее фото">→</button><button id="galleryClose" type="button" aria-label="Закрыть галерею">×</button></div></div></dialog>
+  <noscript><p style="padding:25px;background:#10243a;color:white">Интерактивные элементы требуют JavaScript. Фотографии и содержание разделов доступны выше.</p></noscript>
+  <script>
+  window.addEventListener('DOMContentLoaded', () => {
+    'use strict';
+    const $ = (selector) => document.querySelector(selector);
+    const $$ = (selector) => [...document.querySelectorAll(selector)];
+    const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const hero = $('#heroVideo');
+    const campusVideo = $('#campusVideo');
+    const sections = $$('.act');
+    const tracks = {
+      science: {kicker:'01 / Исследование',title:'Наука начинается с вопроса.',body:'Исследования, инженерное мышление и работа с данными помогают превращать интерес в собственный проект.',rotation:'rotateX(-17deg) rotateY(-28deg)'},
+      art: {kicker:'02 / Самовыражение',title:'Искусство даёт идеям форму.',body:'Творческие практики развивают взгляд, воображение и способность рассказывать свою историю.',rotation:'rotateX(-17deg) rotateY(-118deg)'},
+      sport: {kicker:'03 / Движение',title:'Спорт учит двигаться вперёд.',body:'Тренировка, дисциплина и поддержка команды становятся частью личной траектории.',rotation:'rotateX(-17deg) rotateY(-208deg)'},
+      project: {kicker:'04 / Практика',title:'Проектная смена — время действовать.',body:'Идея проходит путь от первого вопроса до решения, которое можно представить другим.',rotation:'rotateX(-17deg) rotateY(62deg)'}
+    };
+    function selectTrack(button, focus=false) {
+      const item=tracks[button.dataset.track];
+      $$('[data-track]').forEach((b)=>{const selected=b===button;b.setAttribute('aria-selected',String(selected));b.tabIndex=selected?0:-1;});
+      $('#trackPanel').setAttribute('aria-labelledby',button.id);
+      $('#trackKicker').textContent=item.kicker;
+      $('#trackTitle').textContent=item.title;
+      $('#trackBody').textContent=item.body;
+      $('#cube').style.transform=item.rotation;
+      if(focus)button.focus();
+    }
+    $$('[data-track]').forEach(button=>button.addEventListener('click',()=>selectTrack(button)));
+    $('#trackTabs').addEventListener('keydown',(event)=>{
+      if(!['ArrowRight','ArrowLeft','Home','End'].includes(event.key))return;
+      event.preventDefault();const tabs=$$('[data-track]');const index=tabs.findIndex(b=>b.getAttribute('aria-selected')==='true');
+      const next=event.key==='Home'?0:event.key==='End'?tabs.length-1:(index+(event.key==='ArrowRight'?1:-1)+tabs.length)%tabs.length;
+      selectTrack(tabs[next],true);
+    });
+    $$('[data-partner]').forEach(button=>button.addEventListener('click',()=>{
+      $$('[data-partner]').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));
+      $('#partnerDetail').replaceChildren();
+      const name=document.createElement('strong');name.textContent=button.dataset.partner;
+      $('#partnerDetail').append(name,document.createTextNode(' Участник партнёрской матрицы IT-направления.'));
+    }));
+    const skillSets={hard:['Python и алгоритмы','Web-разработка','AI / ML и данные'],soft:['Командная работа','Презентация идей','Критическое мышление']};
+    $$('[data-skill]').forEach(button=>button.addEventListener('click',()=>{
+      $$('[data-skill]').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));
+      $('#skillList').replaceChildren(...skillSets[button.dataset.skill].map(label=>{const li=document.createElement('li');li.textContent=label;return li;}));
+    }));
+    const ages={five:'5–9 классы · первые исследования и знакомство с направлениями.',eight:'8–11 классы · углубление интересов и проектная практика.',spo:'СПО · прикладные задачи и профессиональные навыки.'};
+    $$('[data-age]').forEach(button=>button.addEventListener('click',()=>{
+      $$('[data-age]').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));
+      $('#ageNote').textContent=ages[button.dataset.age];
+    }));
+    const yearText={'2024':'2024 · подтверждённый годовой охват в доступных материалах не указан.','2025':'2025 · 16 276 участников согласно исходной презентации Стратегического совета.','2026':'2026 · годовой итог не указан; текущий год не подменяется прогнозом.'};
+    $$('[data-year]').forEach(button=>button.addEventListener('click',()=>{
+      $$('[data-year]').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));
+      $('#yearNote').textContent=yearText[button.dataset.year];
+      if(window.resultsChart){window.resultsChart.data.datasets[0].pointRadius=[2024,2025,2026].map(y=>String(y)===button.dataset.year?9:5);window.resultsChart.update();}
+    }));
+    const photos=[
+      {src:'./assets/images/kphS6HcAGCJlNcAl4F8GPq05dEJGtzcZxcYMTfZuFzu7c8gXCrPf1y7CZrpGEuNlwglxIfnyooR19eKaXDXvW5j6.jpg',caption:'Эстетическая гимнастика · профильная смена',alt:'Экран с выступлением гимнасток перед аудиторией'},
+      {src:'./assets/images/6EhcKE0-gZqFrE8LE1aUCcyFQHjcJXbTcsfULEMMN7yaZKf12KfIbPfqWdOfWaG4HHcAHGkDoiR8ZXlwXwaudYgE.jpg',caption:'Команда и участники · IT-направление',alt:'Групповое фото участников и наставников у стенда центра'}
+    ];
+    let photoIndex=0,previousFocus=null;
+    function renderPhoto(){const photo=photos[photoIndex];$('#galleryImage').src=photo.src;$('#galleryImage').alt=photo.alt;$('#galleryCaption').textContent=`${String(photoIndex+1).padStart(2,'0')} / 02  ${photo.caption}`;}
+    $('#galleryOpen').addEventListener('click',()=>{previousFocus=document.activeElement;photoIndex=0;renderPhoto();$('#gallery').showModal();});
+    $('#galleryPrev').addEventListener('click',()=>{photoIndex=(photoIndex+photos.length-1)%photos.length;renderPhoto();});
+    $('#galleryNext').addEventListener('click',()=>{photoIndex=(photoIndex+1)%photos.length;renderPhoto();});
+    $('#galleryClose').addEventListener('click',()=>$('#gallery').close());
+    $('#gallery').addEventListener('click',(event)=>{if(event.target===$('#gallery'))$('#gallery').close();});
+    $('#gallery').addEventListener('close',()=>previousFocus?.focus());
+    hero.addEventListener('error',()=>$('#heroMedia').classList.add('failed'));
+    campusVideo.addEventListener('error',()=>{$('#campusMedia').classList.add('failed');$('#campusPlay').hidden=true;});
+    function playHero(){if(!reduced&&document.visibilityState==='visible')hero.play().catch(()=>{});}
+    if(reduced){hero.pause();}else playHero();
+    $('#heroSwitch').addEventListener('click',()=>{
+      const alternate=$('#heroSwitch').getAttribute('aria-pressed')!=='true';
+      hero.pause();hero.src=alternate?'./assets/videos/hero-main.mp4':'./assets/videos/fin.mp4';
+      hero.load();$('#heroMedia').classList.remove('failed');
+      $('#heroSwitch').setAttribute('aria-pressed',String(alternate));
+      $('#heroSwitch').innerHTML=alternate?'Вернуть вступление <span aria-hidden="true">↗</span>':'Другой ракурс <span aria-hidden="true">↗</span>';
+      playHero();
+    });
+    document.addEventListener('visibilitychange',()=>{if(document.hidden){hero.pause();campusVideo.pause();}else playHero();});
+    const updateProgress=()=>{
+      const max=Math.max(1,document.documentElement.scrollHeight-innerHeight);
+      $('#progress').style.width=(scrollY/max*100)+'%';
+      const current=sections.reduce((active,section,index)=>section.getBoundingClientRect().top<innerHeight*.48?index:active,0);
+      $$('.rail a,.nav a').forEach(link=>{if(link.hash==='#'+sections[current].id)link.setAttribute('aria-current','location');else link.removeAttribute('aria-current');});
+    };
+    addEventListener('scroll',updateProgress,{passive:true});updateProgress();
+    if(window.Chart){
+      window.resultsChart=new Chart($('#dynamics'),{
+        type:'line',data:{labels:['2024','2025','2026'],datasets:[{label:'Подтверждённый охват',data:[null,16276,null],borderColor:'#2AB7CA',backgroundColor:'#2AB7CA',pointBorderColor:'#dffaff',pointBorderWidth:2,pointRadius:[5,9,5],pointHoverRadius:11,spanGaps:false,tension:.3}]},
+        options:{responsive:true,maintainAspectRatio:false,animation:reduced?false:{duration:500},plugins:{legend:{display:false},tooltip:{callbacks:{label:context=>context.parsed.y===null?'Нет данных':context.parsed.y.toLocaleString('ru-RU')+' участников'}}},scales:{x:{grid:{display:false},ticks:{color:'#afc6d6'},border:{color:'#ffffff33'}},y:{beginAtZero:true,suggestedMax:18000,grid:{color:'#ffffff1b'},border:{display:false},ticks:{color:'#afc6d6',callback:value=>value===0?'0':value/1000+' тыс.'}}}}
+      });
+    }else{$('#dynamics').hidden=true;$('#chartFallback').style.display='block';}
+    if(window.gsap&&window.ScrollTrigger){
+      gsap.registerPlugin(ScrollTrigger);
+      if(!reduced){
+        gsap.utils.toArray('.scene-media img').forEach(img=>gsap.to(img,{scale:1.15,ease:'none',scrollTrigger:{trigger:img.closest('.act'),start:'top bottom',end:'bottom top',scrub:true}}));
+        gsap.utils.toArray('.act-inner').forEach(inner=>gsap.from(inner,{y:45,opacity:0,duration:.8,ease:'power2.out',scrollTrigger:{trigger:inner,start:'top 83%',once:true}}));
+        const count={value:0};gsap.to(count,{value:16276,duration:2,ease:'power2.out',scrollTrigger:{trigger:'#impact',start:'top 70%',once:true},onUpdate:()=>$('#counter').textContent=Math.round(count.value).toLocaleString('ru-RU')});
+      }
+    }
+    let smooth=null;
+    if(window.Lenis&&!reduced){smooth=new Lenis({duration:1.1,smoothWheel:true});smooth.on('scroll',()=>{window.ScrollTrigger?.update();updateProgress();});const raf=(time)=>{smooth.raf(time);requestAnimationFrame(raf);};requestAnimationFrame(raf);}
+    $$('a[href^="#"]').forEach(link=>link.addEventListener('click',(event)=>{const target=$(link.getAttribute('href'));if(!target)return;event.preventDefault();if(smooth)smooth.scrollTo(target,{offset:-65});else target.scrollIntoView({behavior:reduced?'instant':'smooth'});history.replaceState(null,'','#'+target.id);}));
+    // Drive the original drone MP4 with scroll position; the video remains paused so it never races the scroll.
+    campusVideo.pause();
+    let campusProgress=0,seekFrame=0,videoReady=false,playingFallback=false;
+    campusVideo.addEventListener('loadedmetadata',()=>{videoReady=Number.isFinite(campusVideo.duration)&&campusVideo.duration>0; if(videoReady&&!reduced)seekToProgress();});
+    function seekToProgress(){
+      seekFrame=0;if(!videoReady||reduced||playingFallback||campusVideo.seeking)return;
+      const target=Math.min(campusVideo.duration-.05,Math.max(0,campusProgress*campusVideo.duration));
+      if(Math.abs(campusVideo.currentTime-target)>.065){try{campusVideo.currentTime=target;}catch{}}
+    }
+    function requestSeek(){if(!seekFrame)seekFrame=requestAnimationFrame(seekToProgress);}
+    campusVideo.addEventListener('seeked',requestSeek);
+    function setCampusProgress(progress){campusProgress=Math.max(0,Math.min(1,progress));$('#scrubFill').style.width=(campusProgress*100)+'%';$('#scrubPercent').textContent=String(Math.round(campusProgress*100)).padStart(2,'0')+'%';requestSeek();}
+    if(window.ScrollTrigger&&!reduced){ScrollTrigger.create({trigger:'#campus',start:'top top',end:'bottom bottom',onUpdate:self=>setCampusProgress(self.progress)});}
+    else if(!reduced){const onScroll=()=>{const box=$('#campus').getBoundingClientRect();setCampusProgress(-box.top/Math.max(1,box.height-innerHeight));};addEventListener('scroll',onScroll,{passive:true});onScroll();}
+    if(reduced){$('#campusPlay').hidden=false;$('#campusPlay').textContent='Смотреть видео ↗';}
+    $('#campusPlay').addEventListener('click',async()=>{playingFallback=true;campusVideo.currentTime=0;campusVideo.controls=true;try{await campusVideo.play();}catch{playingFallback=false;}campusVideo.addEventListener('ended',()=>{playingFallback=false;campusVideo.controls=false;},{once:true});});
+  });
+  </script>
+</body>
+</html>
